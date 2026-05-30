@@ -1,0 +1,43 @@
+name: Smart pipeline
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - Download the code
+        uses: actions/checkout@v4
+
+      - name: Step 2 - Run test
+        run: |
+          echo "Running test"
+          echo "All test passed"
+
+      - name: Notify if test failed
+        if: failure()
+        run: echo "Alert test failed! -- Notifying team"
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Step 1 - Bundle the App
+        if: github.ref == 'refs/heads/main'
+        run: echo "Building app only on main branach"
+
+      - name: Step 2 - Build skipped message
+        if: github.ref != 'refs/heads/main'
+        run: echo "Not main branch -- skipping build"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Step 1 - Deploy on server
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying on server"
+
+      - name: Step 2 - Skipped message
+        if: github.ref != 'refs/heads/main'
+        run: echo "Not main branch -- Skipping deploy"
