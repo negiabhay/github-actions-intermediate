@@ -1,4 +1,4 @@
-name: Smart pipeline
+name: Smart pipeline V2
 
 on: push
 
@@ -21,23 +21,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Step 1 - Bundle the App
-        if: github.ref == 'refs/heads/main'
         run: echo "Building app only on main branach"
-
-      - name: Step 2 - Build skipped message
-        if: github.ref != 'refs/heads/main'
-        run: echo "Not main branch -- skipping build"
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    if: github.ref == 'refs/heads/main' && github.actor == 'negiabhay'
     steps:
       - name: Step 1 - Deploy on server
-        if: github.ref == 'refs/heads/main'
         run: echo "Deploying on server"
-
-      - name: Step 2 - Skipped message
-        if: github.ref != 'refs/heads/main'
-        run: echo "Not main branch -- Skipping deploy"
