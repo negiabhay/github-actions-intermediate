@@ -1,0 +1,7 @@
+name: Main pipeline
+
+on: push
+
+jobs:
+  call-deploy:
+    uses: negiabhay/github-actions-intermediate/.github/workflows/reusable-deploy.yml@main
