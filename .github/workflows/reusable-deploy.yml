@@ -1,0 +1,20 @@
+name: Reusable Deploy Workflow
+
+on: 
+  workflow_call: 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Step 2 - Run test
+        run: echo "Running test from reusable workflow..."
+
+      - name: Step 3 - Build the app
+        run: echo "Building the app from reusable workflow..."
+
+      - name: Step 4 - Deploy to server
+        run: echo "Deploying to server from reusable workflow..."
