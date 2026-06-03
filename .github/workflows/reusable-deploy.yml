@@ -9,6 +9,10 @@ on:
      app_name:
        required: true
        type: string
+   secrets:
+     EC2_SSH_KEY:
+      required: true
+     
 
 jobs:
   deploy:
@@ -25,3 +29,6 @@ jobs:
 
       - name: Step 4 - Deploy to server
         run: echo "Deploying ${{ inputs.app_name }} to ${{ inputs.environment }} server..."
+
+      - name: Step 5 - Connect to server
+        run: echo "Connecting to server using secrets ${{ secrets.EC2_SSH_KEY }}"
