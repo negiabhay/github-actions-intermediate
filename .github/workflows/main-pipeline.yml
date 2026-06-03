@@ -8,3 +8,5 @@ jobs:
     with:
       environment: Production
       app_name: quickbite-api
+    secrets: 
+      EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
