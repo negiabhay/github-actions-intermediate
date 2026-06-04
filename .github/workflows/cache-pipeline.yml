@@ -1,0 +1,22 @@
+name: Cache Pipeline
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - Checkout code
+        uses: actions/checkout@v3
+
+      - name: Step 2 - Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: Step 3 - Install Dependencies
+        run: npm install
+
+      - name: Step 4 - Run App
+        run: node -e "const _ = require('lodash'); console.log('Lodash loaded:', _.VERSION);"
