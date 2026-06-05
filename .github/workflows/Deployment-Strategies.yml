@@ -1,0 +1,71 @@
+name: Deployment Strategies
+
+on: push
+
+jobs:
+
+  recreate-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - Stop old version
+        run: echo "Stoping v1..."
+
+      - name: Step 2 - Deploy new version
+        run: echo "Deploying v2..."
+
+      - name: Step 3 - Start new version
+        run: echo "Starting v2...  App is live!"
+
+  rolling-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - Deploy to server 1
+        run: echo "Deploying v2 to server 1..."
+
+      - name: Step 2 - Healthcheck server 1
+        run: echo "Server 1st healthy"
+
+      - name: Step 3 - Deploy to server 2
+        run: echo "Deploying v2 to server 2..."
+
+      - name: Step 4 - Healthcheck server 2
+        run: echo "Server-2 Healthy"
+
+      - name: Step 5 - Deploy to sever 3
+        run: echo "Deploying v2 to server 3..."
+
+      - name: Step 6 - Healthcheck server 3
+        run: echo "Server-3 Healthy"
+
+
+  blue-green-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to green environment
+        run: echo "Deploying v2 to green environment..."
+
+      - name: Switch Load Balancer to Green Environment
+        run: echo "Traffic switched from bule to green. v2 is live!"
+
+      - name: Keep blue on standby
+        run: echo "Kept v1 running for instant rollback"
+
+
+  Canary-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to 10% users
+        run: echo "v2 deployed to 10% of server..."
+
+      - name: Monitor Error Rates
+        run: echo "Error rate 0.1% - healthy..."
+
+      - name: Increase to 50%
+        run: echo "v2 rolled out to 50% of servers..."
+
+      - name: Monitor again
+        run: echo "Error rate 0.1% - still healthy..."
+
+      - name: Full rollout 100%
+        run: echo "v2 fully deployed to all servers. Canery complete"
+  
